@@ -58,7 +58,7 @@ def load_model(model_path, model_base, model_name, num_gpus):
 
     if 'lora' in model_name.lower():
         lora_cfg_pretrained = AutoConfig.from_pretrained(model_path)
-        tokenizer = AutoTokenizer.from_pretrained(model_base)
+        tokenizer = AutoTokenizer.from_pretrained(model_base, use_fast=False)
         print('Loading LLaVA from base model...')
         model = LlavaLlamaForCausalLM.from_pretrained(model_base, low_cpu_mem_usage=True, config=lora_cfg_pretrained, torch_dtype=torch.float16)
         token_num, tokem_dim = model.lm_head.out_features, model.lm_head.in_features
@@ -94,7 +94,7 @@ def load_model(model_path, model_base, model_name, num_gpus):
         print('Moving to CUDA...')
         model = model.cuda()
     else:
-        tokenizer = AutoTokenizer.from_pretrained(model_path)
+        tokenizer = AutoTokenizer.from_pretrained(model_path, use_fast=False)
         if 'llava' in model_name.lower():
             if 'mpt' in model_name.lower():
                 model = LlavaMPTForCausalLM.from_pretrained(model_path, torch_dtype=torch.float16, low_cpu_mem_usage=True, **kwargs)
@@ -181,6 +181,7 @@ class ModelWorker:
             "worker_status": self.get_status()
         }
         r = requests.post(url, json=data)
+        logging.info(r.text)
         assert r.status_code == 200
 
     def send_heart_beat(self):
