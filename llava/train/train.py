@@ -240,11 +240,11 @@ def _tokenize_fn(strings: Sequence[str],
 def _mask_targets(target, tokenized_lens, speakers):
     # cur_idx = 0
     cur_idx = tokenized_lens[0]
-    tokenized_lens = tokenized_lens[1:]
+    tokenized_lens = tokenized_lens[1:] # ignore system message
     target[:cur_idx] = IGNORE_INDEX
     for tokenized_len, speaker in zip(tokenized_lens, speakers):
         if speaker == "human":
-            target[cur_idx+2:cur_idx + tokenized_len] = IGNORE_INDEX
+            target[cur_idx+2:cur_idx + tokenized_len] = IGNORE_INDEX # ignore BOS(<s>) and ###
         cur_idx += tokenized_len
 
 
