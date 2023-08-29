@@ -36,9 +36,7 @@ def eval_model(args):
     else:
         qs = DEFAULT_IMAGE_TOKEN + '\n' + qs
 
-    if 'llama-2' in model_name.lower():
-        conv_mode = "llava_llama_2"
-    elif "v1" in model_name.lower():
+    if "v1" in model_name.lower():
         conv_mode = "llava_v1"
     elif "mpt" in model_name.lower():
         conv_mode = "mpt"
