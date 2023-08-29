@@ -29,11 +29,9 @@ def main(args):
     disable_torch_init()
 
     model_name = get_model_name_from_path(args.model_path)
-    tokenizer, model, image_processor, context_len = load_pretrained_model(args.model_path, args.model_base, model_name, args.load_8bit, args.load_4bit)
+    tokenizer, model, image_processor, context_len = load_pretrained_model(args.model_path, args.model_base, model_name)
 
-    if 'llama-2' in model_name.lower():
-        conv_mode = "llava_llama_2"
-    elif "v1" in model_name.lower():
+    if "v1" in model_name.lower():
         conv_mode = "llava_v1"
     elif "mpt" in model_name.lower():
         conv_mode = "mpt"
@@ -109,11 +107,10 @@ if __name__ == "__main__":
     parser.add_argument("--model-base", type=str, default=None)
     parser.add_argument("--image-file", type=str, required=True)
     parser.add_argument("--num-gpus", type=int, default=1)
+    parser.add_argument("--device", type=str, choices=["cuda", "cpu"], default="cuda")
     parser.add_argument("--conv-mode", type=str, default=None)
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--max-new-tokens", type=int, default=512)
-    parser.add_argument("--load-8bit", action="store_true")
-    parser.add_argument("--load-4bit", action="store_true")
     parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
     main(args)
