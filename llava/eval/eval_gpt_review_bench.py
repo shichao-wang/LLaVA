@@ -82,11 +82,7 @@ if __name__ == '__main__':
         ans2 = json.loads(ans2_js)
 
         inst = image_to_context[ques['image']]
-
-        if isinstance(inst['caption'], list):
-            cap_str = '\n'.join(inst['caption'])
-        else:
-            cap_str = inst['caption']
+        cap_str = '\n'.join(inst['caption'])
 
         category = 'llava_bench_' + json.loads(ques_js)['category']
         if category in rule_dict:
