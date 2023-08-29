@@ -11,7 +11,7 @@ PROMPT_VERSION=plain
 ########### DO NOT CHANGE ###########
 
 deepspeed llava/train/train_mem.py \
-    --deepspeed ./scripts/zero2.json \
+    --deepspeed /path/to/deepspeed.json \
     --model_name_or_path ./checkpoints/$MODEL_VERSION \
     --version $PROMPT_VERSION \
     --data_path /path/to/pretrain_data.json \

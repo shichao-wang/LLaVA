@@ -13,7 +13,7 @@
 ################## LLaMA-2 ##################
 
 deepspeed llava/train/train_mem.py \
-    --deepspeed ./scripts/zero2.json \
+    --deepspeed /path/to/deepspeed.json \
     --lora_enable True \
     --model_name_or_path ./checkpoints/$MODEL_VERSION \
     --version $PROMPT_VERSION \
